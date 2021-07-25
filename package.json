@@ -1,6 +1,6 @@
 {
   "private": true,
-  "displayName": "Plugin Name",
+  "displayName": "Homebridge IoT Neopixel",
   "name": "homebridge-iot-neopixel",
   "version": "1.0.0",
   "description": "A short description about what your plugin does.",
