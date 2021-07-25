@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "NeoPixelHomebridgePlugin",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -9,7 +9,22 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "NeoPixel HomeBridge Plugin"
+      },
+      "aws_access_id": {
+        "title": "AWS Access ID",
+        "type": "string",
+        "required": true
+      },
+      "aws_secret_key": {
+        "title": "AWS Secret Key",
+        "type": "string",
+        "required": true
+      },
+      "aws_iot_endpoint": {
+        "title": "AWS IoT Endpoint",
+        "type": "string",
+        "required": true
       }
     }
   }
