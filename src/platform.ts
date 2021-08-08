@@ -65,7 +65,7 @@ export class NeoPixelHomebridgePlugin implements DynamicPlatformPlugin {
     // or a user-defined array in the platform config.
     const devices = [
       {
-        uniqueId: 'arduino',
+        uniqueId: 'neopixel',
         displayName: 'Reading Light',
       },
     ];
