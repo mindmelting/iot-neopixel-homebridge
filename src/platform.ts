@@ -51,18 +51,21 @@ export class NeoPixelHomebridgePlugin implements DynamicPlatformPlugin {
    * must not be registered again to prevent "duplicate UUID" errors.
    */
   async discoverDevices() {
-
-    const awsParams = {
+    const iot = new Iot({
+      region: 'ap-southeast-2',
+      credentials: {
+        accessKeyId: this.config.aws_access_id,
+        secretAccessKey: this.config.aws_secret_key,
+      },
+    });
+    const iotData = new IotData({
       endpoint: this.config.aws_iot_endpoint,
       region: 'ap-southeast-2',
       credentials: {
         accessKeyId: this.config.aws_access_id,
         secretAccessKey: this.config.aws_secret_key,
       },
-    };
-
-    const iot = new Iot(awsParams);
-    const iotData = new IotData(awsParams);
+    });
 
     const result = await iot.listThings().promise();
 
