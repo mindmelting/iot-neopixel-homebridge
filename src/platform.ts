@@ -1,5 +1,5 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
-import { IotData } from 'aws-sdk';
+import { IotData, Iot } from 'aws-sdk';
 
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
 import { LightBulbPlatformAccessory } from './platformAccessory';
@@ -50,25 +50,28 @@ export class NeoPixelHomebridgePlugin implements DynamicPlatformPlugin {
    * Accessories must only be registered once, previously created accessories
    * must not be registered again to prevent "duplicate UUID" errors.
    */
-  discoverDevices() {
-    const iotData = new IotData({
+  async discoverDevices() {
+
+    const awsParams = {
       endpoint: this.config.aws_iot_endpoint,
       region: 'ap-southeast-2',
       credentials: {
         accessKeyId: this.config.aws_access_id,
         secretAccessKey: this.config.aws_secret_key,
       },
-    });
+    };
 
-    // EXAMPLE ONLY
-    // A real plugin you would discover accessories from the local network, cloud services
-    // or a user-defined array in the platform config.
-    const devices = [
-      {
-        uniqueId: 'neopixel',
-        displayName: 'Reading Light',
-      },
-    ];
+    const iot = new Iot(awsParams);
+    const iotData = new IotData(awsParams);
+
+    const result = await iot.listThings().promise();
+
+    const devices = (result.things || []).map(thing => ({
+      uniqueId: thing.thingName!,
+      displayName: thing.thingName!,
+    }));
+
+    this.log.debug('Fetched devices', devices);
 
     // loop over the discovered devices and register each one if it has not already been registered
     for (const device of devices) {
